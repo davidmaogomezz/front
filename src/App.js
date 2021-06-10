@@ -1,23 +1,31 @@
 import React from 'react';
+import Home from './components/Home'
+import Login from './components/Login'
 
-import axios from 'axios';
+export default class App extends React.Component {
 
-export default class Orders extends React.Component {
-  state = {
-    orders: []
-  }
-
-  async componentDidMount() {
-    const response = await axios.get(`http://127.0.0.1:3000/api/v1/orders`)
-    const orders = response.data.orders;
-    this.setState({ orders });
+  constructor(props) {
+    super(props)
+    this.state = { 
+      auth: localStorage.getItem('auth'),
+      accessToken: localStorage.getItem('accessToken'),
+      clien: localStorage.getItem('client'),
+      uid: localStorage.getItem('uid')
+    }
   }
 
   render() {
+
+    const auth = this.state.auth
+    let component;
+    if (auth !== null) {
+      component = <Home/>
+    } else {
+      component = <Login/>
+    }
+    
     return (
-      <ul>
-        { this.state.orders.map(order => <li>{order.id}</li>)}
-      </ul>
+      component
     )
   }
 }
