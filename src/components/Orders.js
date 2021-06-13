@@ -9,6 +9,8 @@ export default class Orders extends React.Component {
     this.renderItems = this.renderItems.bind(this);
     this.renderCustomerName = this.renderCustomerName.bind(this);
     this.renderCustomerAddress = this.renderCustomerAddress.bind(this);
+    this.renderFormShipment = this.renderFormShipment.bind(this);    
+    this.createShipment = this.createShipment.bind(this);        
   }
 
   state = {
@@ -60,6 +62,35 @@ export default class Orders extends React.Component {
       address
     )   
   }
+  
+  async createShipment(event, order, nameCourier) {
+    event.preventDefault();
+    // const headers = {
+    //   'Content-Type': 'application/json',
+    //   'Accept': 'application/json',
+    //   'access-token': localStorage.getItem('accessToken'),
+    //   'client': localStorage.getItem('client'),
+    //   'uid': localStorage.getItem('uid')
+    // }
+    const response = await axios.post(`http://127.0.0.1:3000/api/v1/shipments`,  { oder_id: order.id, name_courier: nameCourier } ) 
+    const orders = response.data;
+    this.setState({ orders });    
+  }
+
+  renderFormShipment(order) {
+    let form = <form onSubmit={this.createShipment(order, 'name couriers')}>
+                <div className="item-form-shipment">
+                  <label>
+                    Couriers:
+                  </label>
+                  <input type="email" name="email" value={this.state.email} onChange={this.handleChangeEmail} />
+                  <input className="btn-shipment" type="submit" value="Enviar" />
+                </div>                
+              </form>
+    return (
+      form
+    )
+  }
 
   render() {
     return (
@@ -89,6 +120,9 @@ export default class Orders extends React.Component {
             <td>
               {order.data.financial_status}
             </td>                        
+            <td>
+              {this.renderFormShipment(order)}
+            </td>                                    
           </tr>
         )}
       </tbody>
