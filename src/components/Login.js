@@ -70,7 +70,7 @@ export default class Login extends React.Component {
                             </label>
                             <input type="password" name="email" value={this.state.password} onChange={this.handleChangePassword} />
                           </div>
-                          <input type="submit" value="Submit" />
+                          <input type="submit" value="Ingresar" />
                         </form>          
                       </div>
                     </div>

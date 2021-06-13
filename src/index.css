@@ -41,3 +41,13 @@ code {
   top: 1rem;
   right: 1rem;
 }
+
+.item-form-shipment {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+} 
+
+.btn-shipment {
+  margin-left: 1rem;
+}
